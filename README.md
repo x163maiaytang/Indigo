@@ -1,2 +1,5 @@
-# IndigoNet
-基于Netty封装的网络包 socket  + websocket
+# Indigo
+轻量RPC框架
+
+moudle :
+Common + Net + Service + DataStore + DB
