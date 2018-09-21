@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>Indigo</groupId>
+    <artifactId>Indigo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>IndigoNet</groupId>
+  <artifactId>IndigoNet</artifactId>
+  <name>网络</name>
+  <description>网络</description>
+  
+  	<dependencies>
+  	
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.0.33.Final</version>
+		</dependency>
+		
+		<dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-websocket</artifactId>  
+            <version>4.3.14.RELEASE</version>  
+        </dependency>  
+ 
+ 
+	</dependencies>
+</project>

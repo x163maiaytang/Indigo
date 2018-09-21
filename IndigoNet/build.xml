@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<project name="Luna" default="all" xmlns:artifact="urn:maven-artifact-ant">
+	
+    <property name="maven.class.path" value="Server/target/dependency/**/*.jar" /> 
+	
+	<path id="classpath">
+		 
+		<pathelement location="target/classes/" />
+		<fileset dir="../">
+			<include name="${maven.class.path}" />
+		</fileset>
+	</path>
+ 
+ 
+	<target name="all" depends="begin,clean,complie,copyres,weave" />
+	
+	<target name="begin">
+		<echo message = "========================================= begin exec Luna ====================================="/>
+	</target>
+
+	<target name="clean">
+		<delete dir="./target/classes" />
+		<mkdir dir="./target/classes" />
+	</target>
+
+	<target name="complie">
+		<javac destdir="./target/classes/" debug="true" includeAntRuntime="false" fork="yes" encoding="UTF8">
+		 
+			<src path="./src/main/java" />
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	
+	<target name="copyres">
+		<copy todir="./target/classes/">
+			<fileset dir="./src/main/resources/">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+ 
+		<copy todir="./target/classes/">
+			<fileset dir="./src/main/java/">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+ 
+
+	<target name="weave">
+		<echo message="Weaving files ===================" />
+
+		<java classname="kilim.tools.Weaver" fork="yes">
+			<classpath refid="classpath" />
+			<assertions>
+				<enable />
+			</assertions>
+			<arg value="-d" />
+			<arg value="./target/classes" />
+			<arg line="./target/classes" />
+			
+			<sysproperty key= "file.encoding" value="UTF-8"/>
+		</java>
+		
+		
+		<jar jarfile="target/Luna-0.0.1.jar" basedir="./target/classes/">
+			<include name="**/*" />
+		</jar>
+ 
+	</target>
+ 
+
+</project>
