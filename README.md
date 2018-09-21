@@ -1,5 +1,5 @@
 # Indigo
 轻量RPC框架
 
-moudle :
+module :
 Common + Net + Service + DataStore + DB
