@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Indigo</groupId>
   <artifactId>Indigo</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>pom</packaging>
   <name>轻量RPC框架</name>
   <description>轻量RPC框架</description>
