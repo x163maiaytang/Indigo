@@ -55,26 +55,14 @@
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-core</artifactId>
-		    <version>5.0.6.RELEASE</version>
-		</dependency>
-		
-		
-		<dependency>
-			<groupId>IndigoCommon</groupId>
-			<artifactId>IndigoCommon</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		
+	
 	</dependencies>
 	
 	
 	
     <build>
     
-    	<finalName>${project.artifactId}-${version}</finalName>
+    	<finalName>${project.artifactId}-${project.version}</finalName>
 
 		<resources>
 			<resource>
@@ -120,13 +108,13 @@
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
 			<name>nexus distribution snapshot repository</name>
-			<url>http://123.56.98.62:8081/nexus/content/repositories/snapshots/</url>
+			<url>http://47.105.48.56:8999/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 
 		<repository>
 			<id>nexus-releases</id>
 			<name>nexus Release Repository</name>
-			<url>http://123.56.98.62:8081/nexus/content/repositories/releases/</url>
+			<url>http://47.105.48.56:8999/nexus/content/repositories/releases/</url>
 		</repository>
 	</distributionManagement>
 </project>
