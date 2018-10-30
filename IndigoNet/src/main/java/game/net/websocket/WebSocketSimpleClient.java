@@ -1,7 +1,6 @@
 package game.net.websocket;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.apache.log4j.Logger;
 
@@ -44,7 +43,7 @@ public class WebSocketSimpleClient {
 		boot.option(ChannelOption.SO_KEEPALIVE, true)
 			.option(ChannelOption.TCP_NODELAY, true)
 			.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000) // 3s
-			.option(ChannelOption.SO_BACKLOG, 1024 * 1024 * 10)
+//			.option(ChannelOption.SO_BACKLOG, 1024 * 1024 * 10)
 			.group(group)
 			.handler(new LoggingHandler(LogLevel.INFO)).channel(NioSocketChannel.class).handler(initializer);
 
