@@ -36,64 +36,51 @@ public class WebSocketSimpleClient {
 
 		this.handler = handler;
 
-		WebSocketChannelInitializer initializer = new WebSocketChannelInitializer(handler);
 
 		EventLoopGroup group = new NioEventLoopGroup();
 		boot = new Bootstrap();
 		boot.option(ChannelOption.SO_KEEPALIVE, true)
 			.option(ChannelOption.TCP_NODELAY, true)
 			.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000) // 3s
-//			.option(ChannelOption.SO_BACKLOG, 1024 * 1024 * 10)
 			.group(group)
-			.handler(new LoggingHandler(LogLevel.INFO)).channel(NioSocketChannel.class).handler(initializer);
+			.handler(new LoggingHandler(LogLevel.INFO))
+			.channel(NioSocketChannel.class)
+			.handler(new WebSocketChannelInitializer(handler));
 
 	};
 
 	public boolean connectTo(String url, int retryTimes) throws Exception {
-		boolean result = false;
 		ChannelFuture future = null;
-		
-		
 		URI websocketURI = new URI(url);
 		
 		
 		HttpHeaders httpHeaders = new DefaultHttpHeaders();
 		WebSocketClientHandshaker handshaker = WebSocketClientHandshakerFactory.newHandshaker(websocketURI, WebSocketVersion.V13, (String) null, true, httpHeaders);
-		for (int connectNum = 0; connectNum <= retryTimes; connectNum++) {
-			try {
-				future = boot.connect(websocketURI.getHost(), websocketURI.getPort()).sync();
-			} catch (Exception e) {
-				logger.error("Failed to connect to {" + url + "} {" + e + "}");
-				continue;
-			}
-
-			if (future.isSuccess()) {
-				
-				this.channel = future.channel();
-
-				handler.setShakeHandler(handshaker);
-				handshaker.handshake(channel);
-
-				// 阻塞等待是否握手成功
-				handler.handshakeFuture().sync();
-				result = true;
-				logger.info("Connect to " + url + " success");
-				break;
-			}
+		
+		try {
+			future = boot.connect(websocketURI.getHost(), websocketURI.getPort()).sync();
+		} catch (Exception e) {
+			logger.error("Failed to connect to {" + url + "} {" + e + "}");
 		}
 
-		if (!result) {
+		if (future.isSuccess()) {
+			
+			this.channel = future.channel();
 
-			logger.error("After retry " + retryTimes + " times, still can't connect to {" +url+ "}!!!");
-		} else {
-			try {
-				Thread.sleep(1000 * 2);
-			} catch (InterruptedException e) {
-				logger.error("exception:", e);
-			}
+			handler.setShakeHandler(handshaker);
+			handshaker.handshake(channel);
+
+			// 阻塞等待是否握手成功
+			handler.handshakeFuture().sync();
+			logger.info("Connect to " + url + " success");
+			
+			
+			return true;
 		}
+	
 
-		return result;
+	 
+		return false;
 	}
 
 	public long getSessionId() {
@@ -114,7 +101,6 @@ public class WebSocketSimpleClient {
 			logger.error("client channel is unconnected");
 			return false;
 		}
-		
 		
 		BinaryWebSocketFrame binaryWebSocketFrame=new BinaryWebSocketFrame(bf);
 		this.channel.writeAndFlush(binaryWebSocketFrame);

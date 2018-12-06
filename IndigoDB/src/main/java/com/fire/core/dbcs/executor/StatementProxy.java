@@ -61,7 +61,7 @@ public class StatementProxy
 
 	private void init(Method method)
 	{
-		DBZone dbzone = DBSpace.getMainDBZone();
+		DBZone dbzone = DBSpace.getDefaultDBZone();
 
 		String tmpStatementId = null;
 		MappedStatement tmpMappedStatement = null;

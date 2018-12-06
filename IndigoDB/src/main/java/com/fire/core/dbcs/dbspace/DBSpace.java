@@ -21,15 +21,24 @@ public class DBSpace
 	private static Map<Integer, DBZone> dbZones = new HashMap<Integer, DBZone>();
 	private static Map<String, DBZone> nameDbZones = new HashMap<String, DBZone>();
 
+	public static DBZone getDefaultDBZone()
+	{
+		
+		for(DBZone dz : nameDbZones.values()) {
+			return dz;
+		}
+		
+		for(DBZone dz : dbZones.values()) {
+			return dz;
+		}
+		
+		return null;
+	}
 	public static DBZone getMainDBZone()
 	{
 		DBZone dbZone = getDBZone("main");
 		if(dbZone != null) {
 			return dbZone;
-		}
-		
-		for(DBZone dz : nameDbZones.values()) {
-			return dz;
 		}
 		
 		return null;
